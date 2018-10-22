@@ -1,4 +1,4 @@
-package gateway
+package inputter
 
 import (
 	"encoding/json"

@@ -16,6 +16,7 @@ import (
 	multierror "github.com/ktr0731/go-multierror"
 	shellwords "github.com/mattn/go-shellwords"
 	"github.com/pkg/errors"
+	"github.com/ktr0731/evans/adapter/inputter"
 )
 
 var (
@@ -140,19 +141,19 @@ func initJSONCLIPresenter() error {
 }
 
 var (
-	jsonFileInputter     *gateway.JSONFileInputter
+	jsonFileInputter     *inputter.JSONFileInputter
 	jsonFileInputterOnce sync.Once
 )
 
 func initJSONFileInputter(in io.Reader) error {
 	jsonFileInputterOnce.Do(func() {
-		jsonFileInputter = gateway.NewJSONFileInputter(in)
+		jsonFileInputter = inputter.NewJSONFileInputter(in)
 	})
 	return nil
 }
 
 var (
-	promptInputter     *gateway.Prompt
+	promptInputter     *inputter.Prompt
 	promptInputterOnce sync.Once
 )
 
@@ -160,7 +161,7 @@ func initPromptInputter(cfg *config.Config) (err error) {
 	promptInputterOnce.Do(func() {
 		var e environment.Environment
 		e, err = Env(cfg)
-		promptInputter = gateway.NewPrompt(cfg, e)
+		promptInputter = inputter.NewPrompt(cfg, e)
 	})
 	return
 }

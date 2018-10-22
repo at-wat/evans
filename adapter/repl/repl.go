@@ -11,17 +11,17 @@ import (
 	"strings"
 	"time"
 
-	prompt "github.com/c-bata/go-prompt"
+	"github.com/c-bata/go-prompt"
 	"github.com/ktr0731/evans/adapter/cui"
-	"github.com/ktr0731/evans/adapter/gateway"
 	"github.com/ktr0731/evans/config"
 	"github.com/ktr0731/evans/di"
 	"github.com/ktr0731/evans/entity/env"
 	"github.com/ktr0731/evans/usecase"
 	"github.com/ktr0731/evans/usecase/port"
-	shellstring "github.com/ktr0731/go-shellstring"
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/ktr0731/go-shellstring"
+	"github.com/mitchellh/go-homedir"
 	"github.com/pkg/errors"
+	"github.com/ktr0731/evans/adapter/inputter"
 )
 
 var (
@@ -70,7 +70,7 @@ type repl struct {
 	ui     cui.UI
 	config *config.REPL
 	env    env.Environment
-	prompt gateway.Prompter
+	prompt inputter.Prompter
 	cmds   map[string]commander
 
 	// exitCh receives exit signal from executor or
@@ -99,7 +99,8 @@ func newEnv(config *config.REPL, env env.Environment, ui cui.UI, inputPort port.
 	executor := &executor{repl: repl}
 	completer := &completer{cmds: cmds, env: env}
 
-	repl.prompt = gateway.NewRealPrompter(
+	// TODO: DI する
+	repl.prompt = inputter.NewRealPrompter(
 		executor.execute,
 		completer.complete,
 
