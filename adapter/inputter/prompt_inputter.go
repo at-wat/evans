@@ -180,11 +180,11 @@ func newFieldInputter(
 	color color.Color,
 ) *fieldInputter {
 	return &fieldInputter{
-		prompt:       prompter,
-		setter:       setter,
-		prefixFormat: prefixFormat,
-		ancestor:     ancestor,
-		color:        color,
+		prompt:                         prompter,
+		setter:                         setter,
+		prefixFormat:                   prefixFormat,
+		ancestor:                       ancestor,
+		color:                          color,
 		hasAncestorAndHasRepeatedField: hasAncestorAndHasRepeatedField,
 	}
 }

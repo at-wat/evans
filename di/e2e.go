@@ -7,8 +7,8 @@ import "sync"
 func Reset() {
 	reset(
 		&envOnce,
-		&jsonCLIPresenterOnce,
-		&jsonFileInputterOnce,
+		&jsonPresenterOnce,
+		&jsonInputterOnce,
 		&promptInputterOnce,
 		&gRPCClientOnce,
 		&dynamicBuilderOnce,

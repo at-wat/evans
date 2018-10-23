@@ -7,6 +7,7 @@ import (
 
 	"github.com/ktr0731/evans/adapter/gateway"
 	"github.com/ktr0731/evans/adapter/grpc"
+	"github.com/ktr0731/evans/adapter/inputter"
 	"github.com/ktr0731/evans/adapter/parser"
 	"github.com/ktr0731/evans/adapter/presenter"
 	"github.com/ktr0731/evans/config"
@@ -16,7 +17,6 @@ import (
 	multierror "github.com/ktr0731/go-multierror"
 	shellwords "github.com/mattn/go-shellwords"
 	"github.com/pkg/errors"
-	"github.com/ktr0731/evans/adapter/inputter"
 )
 
 var (
@@ -129,25 +129,25 @@ func resolveProtoFiles(conf *config.Config) []string {
 }
 
 var (
-	jsonCLIPresenter     *presenter.JSONPresenter
-	jsonCLIPresenterOnce sync.Once
+	jsonPresenter     *presenter.JSONPresenter
+	jsonPresenterOnce sync.Once
 )
 
-func initJSONCLIPresenter() error {
-	jsonCLIPresenterOnce.Do(func() {
-		jsonCLIPresenter = presenter.NewJSONWithIndent()
+func initJSONPresenter() error {
+	jsonPresenterOnce.Do(func() {
+		jsonPresenter = presenter.NewJSONWithIndent()
 	})
 	return nil
 }
 
 var (
-	jsonFileInputter     *inputter.JSONFileInputter
-	jsonFileInputterOnce sync.Once
+	jsonInputter     port.Inputter
+	jsonInputterOnce sync.Once
 )
 
-func initJSONFileInputter(in io.Reader) error {
-	jsonFileInputterOnce.Do(func() {
-		jsonFileInputter = inputter.NewJSONFileInputter(in)
+func initJSONInputter(in io.Reader) error {
+	jsonInputterOnce.Do(func() {
+		jsonInputter = inputter.NewJSON(in)
 	})
 	return nil
 }
@@ -250,11 +250,11 @@ func initDependencies(cfg *config.Config, in io.Reader) error {
 	initerOnce.Do(func() {
 		initer = &initializer{}
 		initer.register(
-			func() error { return initJSONFileInputter(in) },
+			func() error { return initJSONInputter(in) },
 			func() error { return initPromptInputter(cfg) },
 			func() error { return initGRPCClient(cfg) },
 			func() error { return initEnv(cfg) },
-			initJSONCLIPresenter,
+			initJSONPresenter,
 			initDynamicBuilder,
 		)
 	})

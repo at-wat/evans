@@ -14,8 +14,8 @@ func NewCLIInteractorParams(cfg *config.Config, in io.Reader) (*usecase.Interact
 
 	return &usecase.InteractorParams{
 		Env:            env,
-		OutputPort:     jsonCLIPresenter,
-		InputterPort:   jsonFileInputter,
+		OutputPort:     jsonPresenter,
+		InputterPort:   jsonInputter,
 		GRPCClient:     gRPCClient,
 		DynamicBuilder: dynamicBuilder,
 	}, nil
@@ -27,7 +27,7 @@ func NewREPLInteractorParams(cfg *config.Config, in io.Reader) (param *usecase.I
 	}
 	return &usecase.InteractorParams{
 		Env:            env,
-		OutputPort:     jsonCLIPresenter,
+		OutputPort:     jsonPresenter,
 		InputterPort:   promptInputter,
 		GRPCClient:     gRPCClient,
 		DynamicBuilder: dynamicBuilder,

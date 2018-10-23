@@ -1,10 +1,11 @@
-package inputter
+package inputter_test
 
 import (
 	"bytes"
 	"testing"
 
 	"github.com/golang/protobuf/jsonpb"
+	"github.com/ktr0731/evans/adapter/inputter"
 	"github.com/ktr0731/evans/adapter/internal/testhelper"
 	"github.com/ktr0731/evans/adapter/protobuf"
 	"github.com/stretchr/testify/require"
@@ -29,7 +30,7 @@ func TestJSONFileInputter(t *testing.T) {
 	require.NoError(t, err)
 
 	in := bytes.NewReader([]byte(jsonInput))
-	inputter := NewJSONFileInputter(in)
+	inputter := inputter.NewJSON(in)
 	res, err := inputter.Input(m)
 	require.NoError(t, err)
 

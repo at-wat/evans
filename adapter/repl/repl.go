@@ -13,6 +13,7 @@ import (
 
 	"github.com/c-bata/go-prompt"
 	"github.com/ktr0731/evans/adapter/cui"
+	"github.com/ktr0731/evans/adapter/inputter"
 	"github.com/ktr0731/evans/config"
 	"github.com/ktr0731/evans/di"
 	"github.com/ktr0731/evans/entity/env"
@@ -21,7 +22,6 @@ import (
 	"github.com/ktr0731/go-shellstring"
 	"github.com/mitchellh/go-homedir"
 	"github.com/pkg/errors"
-	"github.com/ktr0731/evans/adapter/inputter"
 )
 
 var (
